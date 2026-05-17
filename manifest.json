@@ -1,0 +1,11 @@
+{
+  "name": "StudyFlow",
+  "short_name": "StudyFlow",
+  "description": "Track assignments, exams, and study sessions.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b0d14",
+  "theme_color": "#0b0d14",
+  "orientation": "portrait",
+  "icons": []
+}

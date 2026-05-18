@@ -4,6 +4,7 @@ const KEYS = {
   study: "sf_s",
   name: "sf_name",
   notes: "sf_notes",
+  classes: "sf_classes",
   settings: "sf_settings",
 };
 
@@ -13,6 +14,7 @@ const defaults = {
   study: [],
   name: "Student",
   notes: [],
+  classes: [],
   settings: { compactMode: false },
 };
 
@@ -52,6 +54,7 @@ export function loadState() {
     study: readJson(KEYS.study, defaults.study),
     name: readString(KEYS.name, defaults.name),
     notes: readJson(KEYS.notes, defaults.notes),
+    classes: readJson(KEYS.classes, defaults.classes),
     settings: { ...defaults.settings, ...readJson(KEYS.settings, defaults.settings) },
   };
 }
@@ -61,6 +64,7 @@ export const store = {
   setExams(value) { return writeJson(KEYS.exams, value); },
   setStudy(value) { return writeJson(KEYS.study, value); },
   setNotes(value) { return writeJson(KEYS.notes, value); },
+  setClasses(value) { return writeJson(KEYS.classes, value); },
   setName(value) {
     try {
       localStorage.setItem(KEYS.name, value || defaults.name);

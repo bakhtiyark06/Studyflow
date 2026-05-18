@@ -3,6 +3,7 @@ import { loadState } from "./storage.js";
 
 const nav = [
   { page: "dashboard", label: "Dashboard", path: "index.html", icon: "grid" },
+  { page: "classes", label: "Classes", path: "pages/classes.html", icon: "book" },
   { page: "assignments", label: "Assignments", path: "pages/assignments.html", icon: "check" },
   { page: "exams", label: "Exams", path: "pages/exams.html", icon: "calendar" },
   { page: "timer", label: "Study Timer", path: "pages/timer.html", icon: "clock" },
@@ -14,6 +15,7 @@ const nav = [
 function icon(name) {
   const paths = {
     grid: '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+    book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M8 7h8M8 11h6"/>',
     check: '<path d="M5 12l4 4L19 6"/><path d="M4 4h16v16H4z"/>',
     calendar: '<path d="M7 3v4M17 3v4M4 9h16"/><rect x="4" y="5" width="16" height="16" rx="3"/>',
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',

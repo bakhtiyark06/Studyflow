@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Classes</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="classes">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Schedule</p>
+        <h1>Classes</h1>
+      </div>
+      <button class="btn primary" id="openClassModal">Add Class</button>
+    </section>
+
+    <section class="classes-layout">
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Your Classes</h2>
+          <span class="pill" id="classCount">0 classes</span>
+        </div>
+        <div id="classesList" class="stack-list"></div>
+      </article>
+
+      <article class="panel syllabus-prep">
+        <div class="panel-header">
+          <h2>Syllabus Import Prep</h2>
+        </div>
+        <label class="label" for="syllabusFile">Upload syllabus file</label>
+        <input class="input" id="syllabusFile" type="file" accept=".pdf,.doc,.docx,.txt">
+        <label class="label" for="syllabusUrl">Paste syllabus URL</label>
+        <input class="input" id="syllabusUrl" type="url" placeholder="https://school.edu/path/to/syllabus">
+        <p class="muted-note">Automatic syllabus parsing will be added later. For now, save class details manually.</p>
+      </article>
+    </section>
+  </template>
+  <div id="modalRoot"></div>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/classes.js"></script>
+</body>
+</html>

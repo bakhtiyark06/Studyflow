@@ -1,5 +1,5 @@
 import { initShell } from "../core/shell.js";
-import { $, uid } from "../core/utils.js";
+import { $, classOptions, uid } from "../core/utils.js";
 import { store } from "../core/storage.js";
 import { emptyState, examCard, modal, toast } from "../core/ui.js";
 
@@ -10,8 +10,8 @@ function render() {
   const upcoming = state.exams.filter((item) => new Date(item.date) > now).sort((a, b) => new Date(a.date) - new Date(b.date));
   const past = state.exams.filter((item) => new Date(item.date) <= now).sort((a, b) => new Date(b.date) - new Date(a.date));
   $("#examsList").innerHTML = [
-    upcoming.length ? `<h2>Upcoming</h2>${upcoming.map(examCard).join("")}` : "",
-    past.length ? `<h2>Past Exams</h2>${past.map(examCard).join("")}` : "",
+    upcoming.length ? `<h2>Upcoming</h2>${upcoming.map((item) => examCard(item, { state })).join("")}` : "",
+    past.length ? `<h2>Past Exams</h2>${past.map((item) => examCard(item, { state })).join("")}` : "",
   ].join("") || emptyState("No exams yet.");
 }
 
@@ -19,8 +19,10 @@ $("#openExamModal").addEventListener("click", () => {
   $("#modalRoot").innerHTML = modal("New Exam", `
     <label class="label" for="eTitle">Exam name</label>
     <input class="input" id="eTitle" placeholder="Midterm">
-    <label class="label" for="eCourse">Course</label>
-    <input class="input" id="eCourse" placeholder="MATH 241">
+    <label class="label" for="eClass">Class</label>
+    <select class="input" id="eClass">${classOptions(state)}</select>
+    <label class="label" for="eCourse">Course label</label>
+    <input class="input" id="eCourse" placeholder="Optional fallback, e.g. MATH 241">
     <label class="label" for="eDate">Date and time</label>
     <input class="input" id="eDate" type="datetime-local">
     <label class="label" for="eLocation">Location</label>
@@ -39,6 +41,7 @@ document.addEventListener("click", (event) => {
     state.exams.push({
       id: uid(),
       title,
+      classId: $("#eClass").value,
       course: $("#eCourse").value.trim(),
       date,
       location: $("#eLocation").value.trim(),

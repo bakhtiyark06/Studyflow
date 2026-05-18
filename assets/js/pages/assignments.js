@@ -1,5 +1,5 @@
 import { initShell } from "../core/shell.js";
-import { $, $$, today, uid } from "../core/utils.js";
+import { $, $$, classNameFor, classOptions, today, uid } from "../core/utils.js";
 import { store } from "../core/storage.js";
 import { assignmentCard, emptyState, modal, toast } from "../core/ui.js";
 
@@ -13,7 +13,7 @@ function render() {
   if (filter === "completed") list = list.filter((item) => item.done);
   if (search) {
     const query = search.toLowerCase();
-    list = list.filter((item) => `${item.title} ${item.course} ${item.notes}`.toLowerCase().includes(query));
+    list = list.filter((item) => `${item.title} ${item.course} ${classNameFor(state, item.classId)} ${item.notes}`.toLowerCase().includes(query));
   }
   const priority = { high: 0, medium: 1, low: 2 };
   list.sort((a, b) => {
@@ -21,15 +21,17 @@ function render() {
     if (priority[a.priority] !== priority[b.priority]) return priority[a.priority] - priority[b.priority];
     return new Date(a.dueDate) - new Date(b.dueDate);
   });
-  $("#assignmentsList").innerHTML = list.map(assignmentCard).join("") || emptyState("No assignments match this view.");
+  $("#assignmentsList").innerHTML = list.map((item) => assignmentCard(item, { state })).join("") || emptyState("No assignments match this view.");
 }
 
 function openForm() {
   $("#modalRoot").innerHTML = modal("New Assignment", `
     <label class="label" for="aTitle">Title</label>
     <input class="input" id="aTitle" placeholder="Lab report">
-    <label class="label" for="aCourse">Course</label>
-    <input class="input" id="aCourse" placeholder="BIOL 201">
+    <label class="label" for="aClass">Class</label>
+    <select class="input" id="aClass">${classOptions(state)}</select>
+    <label class="label" for="aCourse">Course label</label>
+    <input class="input" id="aCourse" placeholder="Optional fallback, e.g. BIOL 201">
     <label class="label" for="aDueDate">Due date</label>
     <input class="input" id="aDueDate" type="date" value="${today()}">
     <label class="label" for="aPriority">Priority</label>
@@ -64,6 +66,7 @@ document.addEventListener("click", (event) => {
     state.assignments.push({
       id: uid(),
       title,
+      classId: $("#aClass").value,
       course: $("#aCourse").value.trim(),
       dueDate,
       priority: $("#aPriority").value,

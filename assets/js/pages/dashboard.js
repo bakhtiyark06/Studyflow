@@ -1,5 +1,5 @@
 import { initShell } from "../core/shell.js";
-import { $, daysUntil, durationLabel, studyStreak, timeOfDay, totalStudyMinutes } from "../core/utils.js";
+import { $, daysUntil, durationLabel, esc, studyStreak, timeOfDay, totalStudyMinutes } from "../core/utils.js";
 import { assignmentCard, emptyState, examCard, statCard, studyCard } from "../core/ui.js";
 
 const state = initShell();
@@ -18,7 +18,7 @@ $("#statsGrid").innerHTML = [
   statCard("Pending", pending.length),
   statCard("Overdue", overdue.length),
   statCard("Exams Ahead", upcomingExams.length),
-  statCard("Study Time", durationLabel(studyMins)),
+  statCard("Classes", state.classes.length),
 ].join("");
 
 $("#focusScore").textContent = `${Math.min(100, Math.round((studyMins / 600) * 100))}%`;
@@ -26,14 +26,30 @@ $("#focusScore").textContent = `${Math.min(100, Math.round((studyMins / 600) * 1
 $("#dueSoonList").innerHTML = pending
   .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
   .slice(0, 5)
-  .map((item) => assignmentCard(item, { compact: true }))
+  .map((item) => assignmentCard(item, { compact: true, state }))
   .join("") || emptyState("No pending assignments.");
 
 $("#upcomingExams").innerHTML = upcomingExams
   .sort((a, b) => new Date(a.date) - new Date(b.date))
   .slice(0, 4)
-  .map(examCard)
+  .map((item) => examCard(item, { state }))
   .join("") || emptyState("No upcoming exams.");
+
+$("#classOverview").innerHTML = state.classes
+  .slice()
+  .sort((a, b) => a.name.localeCompare(b.name))
+  .slice(0, 4)
+  .map((item) => `
+    <article class="card">
+      <div>
+        <h3 class="card-title">${esc(item.name)}</h3>
+        <div class="card-meta">
+          ${item.meetingTime ? `<span>${esc(item.meetingTime)}</span>` : ""}
+          ${item.location ? `<span>${esc(item.location)}</span>` : ""}
+        </div>
+      </div>
+    </article>`)
+  .join("") || emptyState("Add classes to label assignments and exams.");
 
 $("#recentStudy").innerHTML = state.study
   .slice()

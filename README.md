@@ -5,6 +5,7 @@ StudyFlow is a vanilla HTML, CSS, and JavaScript student productivity app.
 ## Current features
 
 - Dashboard with assignment, exam, and study summaries
+- Classes page for class details and syllabus import prep
 - Assignment tracker
 - Exam tracker
 - Study timer and study log

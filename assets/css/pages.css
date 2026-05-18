@@ -95,6 +95,23 @@
 .notes-layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
 .note-editor { display: grid; gap: 12px; }
 
+.classes-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+  gap: 18px;
+}
+
+.syllabus-prep {
+  align-self: start;
+  display: grid;
+  gap: 12px;
+}
+
+.muted-note {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
 .checkbox-row {
   display: flex;
   align-items: center;

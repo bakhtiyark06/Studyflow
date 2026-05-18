@@ -57,7 +57,20 @@ export function allCourses(state) {
     ...state.exams.map((item) => item.course),
     ...state.study.map((item) => item.course),
     ...state.notes.map((item) => item.course),
+    ...state.classes.map((item) => item.name),
   ].filter(Boolean))].sort();
+}
+
+export function classNameFor(state, classId, fallback = "") {
+  const item = state.classes.find((classItem) => classItem.id === classId);
+  return item?.name || fallback || "";
+}
+
+export function classOptions(state, selectedId = "") {
+  return [
+    '<option value="">No linked class</option>',
+    ...state.classes.map((classItem) => `<option value="${esc(classItem.id)}" ${classItem.id === selectedId ? "selected" : ""}>${esc(classItem.name)}</option>`),
+  ].join("");
 }
 
 export function totalStudyMinutes(study = []) {

@@ -18,15 +18,17 @@ export function statCard(label, value) {
   return `<article class="stat-card"><div class="stat-num">${esc(value)}</div><div class="stat-label">${esc(label)}</div></article>`;
 }
 
-export function assignmentCard(item, { compact = false } = {}) {
+export function assignmentCard(item, { compact = false, state = null } = {}) {
   const due = daysUntil(item.dueDate);
   const dueText = due < 0 ? `${Math.abs(due)}d overdue` : due === 0 ? "Due today" : `Due in ${due}d`;
+  const linkedClass = state?.classes?.find((classItem) => classItem.id === item.classId);
+  const classLabel = linkedClass?.name || item.course || "";
   return `
     <article class="card ${item.done ? "is-done" : ""}" data-id="${esc(item.id)}">
       <div>
         <h3 class="card-title">${esc(item.title)}</h3>
         <div class="card-meta">
-          ${item.course ? `<span>${esc(item.course)}</span>` : ""}
+          ${classLabel ? `<span>${esc(classLabel)}</span>` : ""}
           <span class="priority-${esc(item.priority || "medium")}">${esc(item.priority || "medium")}</span>
           <span>${esc(dueText)}</span>
         </div>
@@ -38,14 +40,16 @@ export function assignmentCard(item, { compact = false } = {}) {
     </article>`;
 }
 
-export function examCard(item) {
+export function examCard(item, { state = null } = {}) {
   const days = Math.max(0, daysUntil(item.date));
+  const linkedClass = state?.classes?.find((classItem) => classItem.id === item.classId);
+  const classLabel = linkedClass?.name || item.course || "";
   return `
     <article class="card" data-id="${esc(item.id)}">
       <div>
         <h3 class="card-title">${esc(item.title)}</h3>
         <div class="card-meta">
-          ${item.course ? `<span>${esc(item.course)}</span>` : ""}
+          ${classLabel ? `<span>${esc(classLabel)}</span>` : ""}
           <span>${formatDateTime(item.date)}</span>
           ${item.location ? `<span>${esc(item.location)}</span>` : ""}
         </div>
@@ -84,6 +88,25 @@ export function noteCard(item) {
       </div>
       <div class="card-actions">
         <button class="icon-btn" data-delete="${esc(item.id)}" aria-label="Delete note">Del</button>
+      </div>
+    </article>`;
+}
+
+export function classCard(item) {
+  return `
+    <article class="card" data-id="${esc(item.id)}">
+      <div>
+        <h3 class="card-title">${esc(item.name)}</h3>
+        <div class="card-meta">
+          ${item.instructor ? `<span>${esc(item.instructor)}</span>` : ""}
+          ${item.meetingTime ? `<span>${esc(item.meetingTime)}</span>` : ""}
+          ${item.location ? `<span>${esc(item.location)}</span>` : ""}
+        </div>
+        ${item.notes ? `<p>${esc(item.notes).slice(0, 180)}</p>` : ""}
+        ${item.syllabusUrl ? `<a class="text-link" href="${esc(item.syllabusUrl)}" target="_blank" rel="noreferrer">Open syllabus</a>` : ""}
+      </div>
+      <div class="card-actions">
+        <button class="icon-btn" data-delete="${esc(item.id)}" aria-label="Delete class">Del</button>
       </div>
     </article>`;
 }

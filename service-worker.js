@@ -1,4 +1,4 @@
-const CACHE_NAME = "studyflow-v2";
+const CACHE_NAME = "studyflow-v3";
 
 const FILES_TO_CACHE = [
   "./",
@@ -16,6 +16,7 @@ const FILES_TO_CACHE = [
   "./assets/js/core/shell.js",
   "./assets/js/core/ui.js",
   "./assets/js/pages/dashboard.js",
+  "./assets/js/pages/classes.js",
   "./assets/js/pages/assignments.js",
   "./assets/js/pages/exams.js",
   "./assets/js/pages/timer.js",
@@ -23,6 +24,7 @@ const FILES_TO_CACHE = [
   "./assets/js/pages/stats.js",
   "./assets/js/pages/settings.js",
   "./pages/assignments.html",
+  "./pages/classes.html",
   "./pages/exams.html",
   "./pages/timer.html",
   "./pages/notes.html",

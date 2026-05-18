@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Assignments</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="assignments">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Coursework</p>
+        <h1>Assignments</h1>
+      </div>
+      <button class="btn primary" id="openAssignmentModal">Add Assignment</button>
+    </section>
+    <section class="toolbar">
+      <div class="segmented" role="group" aria-label="Assignment filter">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="pending">Pending</button>
+        <button data-filter="completed">Done</button>
+      </div>
+      <input class="input search-input" id="assignmentSearch" type="search" placeholder="Search assignments or courses">
+    </section>
+    <section class="panel">
+      <div id="assignmentsList" class="stack-list"></div>
+    </section>
+  </template>
+  <div id="modalRoot"></div>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/assignments.js"></script>
+</body>
+</html>

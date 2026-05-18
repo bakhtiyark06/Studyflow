@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Study Timer</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="timer">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Focus</p>
+        <h1>Study Timer</h1>
+      </div>
+      <span class="pill" id="studyTotal">0m total</span>
+    </section>
+    <section class="timer-layout">
+      <article class="panel timer-panel">
+        <label class="label" for="timerCourse">Studying for</label>
+        <input class="input" id="timerCourse" list="courseOptions" placeholder="Course or subject">
+        <datalist id="courseOptions"></datalist>
+        <div class="timer-ring" aria-live="polite">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ring-track" cx="60" cy="60" r="54"></circle>
+            <circle class="ring-progress" id="timerProgress" cx="60" cy="60" r="54"></circle>
+          </svg>
+          <strong id="timerDisplay">00:00:00</strong>
+        </div>
+        <div class="button-row">
+          <button class="btn primary" id="timerStart">Start</button>
+          <button class="btn" id="timerPause" hidden>Pause</button>
+          <button class="btn danger" id="timerStop" hidden>Save & Stop</button>
+        </div>
+        <div class="preset-row" role="group" aria-label="Timer presets">
+          <button data-mins="25">25m</button>
+          <button data-mins="45">45m</button>
+          <button data-mins="60">1h</button>
+          <button data-mins="90">90m</button>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Study Log</h2>
+          <a class="text-link" href="stats.html">Stats</a>
+        </div>
+        <div id="studyLog" class="stack-list"></div>
+      </article>
+    </section>
+  </template>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/timer.js"></script>
+</body>
+</html>

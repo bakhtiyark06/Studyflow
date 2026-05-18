@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Settings</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="settings">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Preferences</p>
+        <h1>Settings</h1>
+      </div>
+      <button class="btn primary" id="saveSettings">Save</button>
+    </section>
+    <section class="settings-grid">
+      <article class="panel form-panel">
+        <label class="label" for="studentName">Your name</label>
+        <input class="input" id="studentName" placeholder="Student">
+        <label class="checkbox-row">
+          <input type="checkbox" id="compactMode">
+          <span>Use compact lists</span>
+        </label>
+      </article>
+      <article class="panel danger-zone">
+        <h2>Data</h2>
+        <p>Clear local app data from this browser. This does not affect GitHub files.</p>
+        <button class="btn danger" id="clearData">Clear StudyFlow Data</button>
+      </article>
+    </section>
+  </template>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/settings.js"></script>
+</body>
+</html>

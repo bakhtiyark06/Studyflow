@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Exams</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="exams">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Preparation</p>
+        <h1>Exams</h1>
+      </div>
+      <button class="btn primary" id="openExamModal">Add Exam</button>
+    </section>
+    <section class="panel">
+      <div id="examsList" class="stack-list"></div>
+    </section>
+  </template>
+  <div id="modalRoot"></div>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/exams.js"></script>
+</body>
+</html>

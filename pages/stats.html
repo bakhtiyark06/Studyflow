@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Statistics</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="stats">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Progress</p>
+        <h1>Study Statistics</h1>
+      </div>
+    </section>
+    <section class="stats-grid" id="statsGrid"></section>
+    <section class="panel">
+      <div class="panel-header"><h2>Course Breakdown</h2></div>
+      <div id="courseBreakdown" class="bar-list"></div>
+    </section>
+  </template>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/stats.js"></script>
+</body>
+</html>

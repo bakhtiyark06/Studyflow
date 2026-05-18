@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d14">
+  <title>StudyFlow | Notes</title>
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="notes">
+  <div id="appShell"></div>
+  <template id="pageContent">
+    <section class="page-title-row">
+      <div>
+        <p class="eyebrow">Capture</p>
+        <h1>Notes</h1>
+      </div>
+      <button class="btn primary" id="saveNote">Save Note</button>
+    </section>
+    <section class="notes-layout">
+      <article class="panel note-editor">
+        <input class="input" id="noteTitle" placeholder="Note title">
+        <input class="input" id="noteCourse" placeholder="Course">
+        <textarea class="input textarea" id="noteBody" rows="10" placeholder="Write class notes, reminders, or study ideas"></textarea>
+      </article>
+      <article class="panel">
+        <div class="panel-header"><h2>Saved Notes</h2></div>
+        <div id="notesList" class="stack-list"></div>
+      </article>
+    </section>
+  </template>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="../assets/js/pages/notes.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+import { $, $$ } from "./utils.js";
+import { loadState } from "./storage.js";
+
+const nav = [
+  { page: "dashboard", label: "Dashboard", path: "index.html", icon: "grid" },
+  { page: "assignments", label: "Assignments", path: "pages/assignments.html", icon: "check" },
+  { page: "exams", label: "Exams", path: "pages/exams.html", icon: "calendar" },
+  { page: "timer", label: "Study Timer", path: "pages/timer.html", icon: "clock" },
+  { page: "notes", label: "Notes", path: "pages/notes.html", icon: "note" },
+  { page: "stats", label: "Stats", path: "pages/stats.html", icon: "chart" },
+  { page: "settings", label: "Settings", path: "pages/settings.html", icon: "gear" },
+];
+
+function icon(name) {
+  const paths = {
+    grid: '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+    check: '<path d="M5 12l4 4L19 6"/><path d="M4 4h16v16H4z"/>',
+    calendar: '<path d="M7 3v4M17 3v4M4 9h16"/><rect x="4" y="5" width="16" height="16" rx="3"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    note: '<path d="M6 4h9l3 3v13H6z"/><path d="M15 4v4h4M9 12h6M9 16h6"/>',
+    chart: '<path d="M5 19V9M12 19V5M19 19v-7"/>',
+    gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+  };
+  return `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name]}</svg>`;
+}
+
+export function initShell() {
+  const activePage = document.body.dataset.page || "dashboard";
+  const state = loadState();
+  const root = window.location.pathname.includes("/pages/") ? "../" : "";
+  document.body.classList.toggle("compact", Boolean(state.settings.compactMode));
+
+  $("#appShell").innerHTML = `
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="${root}index.html">
+          <span class="brand-mark">SF</span>
+          <span>StudyFlow</span>
+        </a>
+        <nav class="nav-list" aria-label="Main navigation">
+          ${nav.map((item) => `
+            <a class="nav-link ${item.page === activePage ? "active" : ""}" href="${root}${item.path}" ${item.page === activePage ? 'aria-current="page"' : ""}>
+              ${icon(item.icon)}
+              <span>${item.label}</span>
+            </a>
+          `).join("")}
+        </nav>
+        <div class="sidebar-footer">
+          <span class="pill">${state.assignments.filter((item) => !item.done).length} pending</span>
+        </div>
+      </aside>
+      <div>
+        <header class="mobile-topbar">
+          <button class="icon-btn" id="menuButton" aria-label="Open menu">Menu</button>
+          <a class="brand" href="${root}index.html"><span class="brand-mark">SF</span><span>StudyFlow</span></a>
+        </header>
+        <main class="main">
+          <div class="page-wrap" id="pageMount"></div>
+        </main>
+      </div>
+    </div>`;
+
+  $("#pageMount").append($("#pageContent").content.cloneNode(true));
+  $("#menuButton")?.addEventListener("click", () => $("#sidebar").classList.toggle("open"));
+  $$(".nav-link").forEach((link) => link.addEventListener("click", () => $("#sidebar").classList.remove("open")));
+  return state;
+}

@@ -95,8 +95,10 @@ function userDataDoc(firestore, uid, key) {
 
 export async function pushLocalDataToCloud(user = currentUser) {
   if (!user?.uid) {
-    emitSyncStatus("Local Mode", "Sign in to enable cloud sync.");
-    return { ok: false, mode: "local-mode", message: "Sign in to enable cloud sync." };
+    const status = hasFirebaseConfig() ? "Signed out" : "Local Mode";
+    const mode = hasFirebaseConfig() ? "signed-out" : "local-mode";
+    emitSyncStatus(status, "Sign in to enable cloud sync.");
+    return { ok: false, mode, message: "Sign in to enable cloud sync." };
   }
 
   const firestore = await loadFirestore();
@@ -128,8 +130,10 @@ export async function pushLocalDataToCloud(user = currentUser) {
 
 export async function pullCloudDataToLocal(user = currentUser) {
   if (!user?.uid) {
-    emitSyncStatus("Local Mode", "Sign in to load cloud data.");
-    return { ok: false, mode: "local-mode", message: "Sign in to load cloud data." };
+    const status = hasFirebaseConfig() ? "Signed out" : "Local Mode";
+    const mode = hasFirebaseConfig() ? "signed-out" : "local-mode";
+    emitSyncStatus(status, "Sign in to load cloud data.");
+    return { ok: false, mode, message: "Sign in to load cloud data." };
   }
 
   const firestore = await loadFirestore();
@@ -192,7 +196,7 @@ export function initCloudSync() {
 
     if (!status.user) {
       currentUser = null;
-      emitSyncStatus("Local Mode", "Signed out. Local data is stored on this device.");
+      emitSyncStatus("Signed out", "Sign in to sync with Firestore.");
       return;
     }
 

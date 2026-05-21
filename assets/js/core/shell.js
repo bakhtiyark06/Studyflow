@@ -1,6 +1,6 @@
 import { $, $$ } from "./utils.js";
 import { loadState } from "./storage.js";
-import { initCloudSync, onSyncStatus } from "../cloud/cloudStorage.js";
+import { getCloudSyncStatus, initCloudSync, onSyncStatus } from "../cloud/cloudStorage.js";
 
 const nav = [
   { page: "dashboard", label: "Dashboard", path: "index.html", icon: "grid" },
@@ -33,6 +33,8 @@ export function initShell() {
   const activePage = document.body.dataset.page || "dashboard";
   const state = loadState();
   const root = window.location.pathname.includes("/pages/") ? "../" : "";
+  const initialSyncStatus = getCloudSyncStatus();
+  const [initialSyncTitle, initialSyncDetail = ""] = initialSyncStatus.split(". ");
   document.body.classList.toggle("compact", Boolean(state.settings.compactMode));
 
   $("#appShell").innerHTML = `
@@ -61,8 +63,8 @@ export function initShell() {
         </header>
         <main class="main">
           <div class="sync-banner" role="status">
-            <strong id="syncStatusTitle">Local Mode</strong>
-            <span id="syncStatusDetail">Cloud Sync Coming Soon</span>
+            <strong id="syncStatusTitle">${initialSyncTitle}</strong>
+            <span id="syncStatusDetail">${initialSyncDetail}</span>
           </div>
           <div class="page-wrap" id="pageMount"></div>
         </main>

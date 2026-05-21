@@ -1,10 +1,10 @@
 export const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_FIREBASE_APP_ID",
+  apiKey: "AIzaSyDRrOMUtzD4oHkDBvFNpEBkDUnXn-1QuKE",
+  authDomain: "studyflow-8ca8c.firebaseapp.com",
+  projectId: "studyflow-8ca8c",
+  storageBucket: "studyflow-8ca8c.firebasestorage.app",
+  messagingSenderId: "895965535514",
+  appId: "1:895965535514:web:8d8a8e9fc2110f3f9160a3",
 };
 
 export function hasFirebaseConfig() {

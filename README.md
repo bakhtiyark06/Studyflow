@@ -12,13 +12,13 @@ StudyFlow is a vanilla HTML, CSS, and JavaScript student productivity app.
 - Notes page
 - Study statistics page
 - Settings page
-- Login/Account page prepared for Firebase Authentication
+- Login/Account page connected to Firebase Authentication
 - Browser localStorage persistence
 - Modular JavaScript and multi-page navigation
 
-## Firebase phase 1
+## Firebase sync
 
-Firebase is intentionally placeholder-only right now. The app stays in Local Mode and continues using localStorage until real Firebase project values are added in `assets/js/cloud/firebaseConfig.js`.
+Firebase Authentication and Cloud Firestore sync use browser-friendly CDN imports. localStorage remains the offline fallback/cache. Signed-in data is stored under `users/{uid}/studyflow/{classes|assignments|exams|studySessions|notes|settings|profile}`.
 
 ## Run locally
 

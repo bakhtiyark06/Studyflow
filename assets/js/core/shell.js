@@ -1,5 +1,6 @@
 import { $, $$ } from "./utils.js";
 import { loadState } from "./storage.js";
+import { initCloudSync, onSyncStatus } from "../cloud/cloudStorage.js";
 
 const nav = [
   { page: "dashboard", label: "Dashboard", path: "index.html", icon: "grid" },
@@ -60,8 +61,8 @@ export function initShell() {
         </header>
         <main class="main">
           <div class="sync-banner" role="status">
-            <strong>Local Mode</strong>
-            <span>Cloud Sync Coming Soon</span>
+            <strong id="syncStatusTitle">Local Mode</strong>
+            <span id="syncStatusDetail">Cloud Sync Coming Soon</span>
           </div>
           <div class="page-wrap" id="pageMount"></div>
         </main>
@@ -71,5 +72,20 @@ export function initShell() {
   $("#pageMount").append($("#pageContent").content.cloneNode(true));
   $("#menuButton")?.addEventListener("click", () => $("#sidebar").classList.toggle("open"));
   $$(".nav-link").forEach((link) => link.addEventListener("click", () => $("#sidebar").classList.remove("open")));
+  onSyncStatus(({ status, detail }) => {
+    $("#syncStatusTitle").textContent = status;
+    $("#syncStatusDetail").textContent = detail;
+  });
+  window.addEventListener("studyflow:cloud-loaded", () => {
+    try {
+      const lastReload = Number(sessionStorage.getItem("sf_cloud_reload_at") || 0);
+      if (Date.now() - lastReload < 5000) return;
+      sessionStorage.setItem("sf_cloud_reload_at", String(Date.now()));
+      window.location.reload();
+    } catch (error) {
+      $("#syncStatusDetail").textContent = "Cloud data loaded. Refresh to view the latest data.";
+    }
+  });
+  initCloudSync();
   return state;
 }

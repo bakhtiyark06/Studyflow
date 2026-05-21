@@ -1,14 +1,29 @@
 import { initShell } from "../core/shell.js";
 import { $, esc } from "../core/utils.js";
 import { toast } from "../core/ui.js";
-import { getAuthMode, signInWithEmail, signOutUser, signUpWithEmail } from "../cloud/auth.js";
-import { buildLocalSyncPayload, getCloudSyncStatus, pushLocalDataToCloud, SYNC_KEYS } from "../cloud/cloudStorage.js";
+import { signInWithEmail, signOutUser, signUpWithEmail, watchAuthState } from "../cloud/auth.js";
+import { buildLocalSyncPayload, getCloudSyncStatus, onSyncStatus, pushLocalDataToCloud, SYNC_KEYS } from "../cloud/cloudStorage.js";
 
 initShell();
 
-$("#authMode").textContent = getAuthMode() === "firebase-ready" ? "Firebase Ready" : "Local Mode";
 $("#authMessage").textContent = getCloudSyncStatus();
-$("#syncKeys").innerHTML = SYNC_KEYS.map((key) => `<div><code>${esc(key)}</code> will sync in a later phase.</div>`).join("");
+$("#syncKeys").innerHTML = SYNC_KEYS.map((key) => `<div><code>${esc(key)}</code> syncs when you are signed in.</div>`).join("");
+
+onSyncStatus(({ status, detail }) => {
+  $("#authMessage").textContent = `${status}: ${detail}`;
+});
+
+watchAuthState((status) => {
+  $("#authMode").textContent = status.label;
+  if (status.mode === "firebase" && status.user?.email) {
+    $("#authMessage").textContent = `Signed in as ${status.user.email}. Cloud sync will run automatically.`;
+  } else if (status.mode === "firebase") {
+    $("#authMessage").textContent = "Signed out. App data stays in localStorage on this device.";
+  }
+}).catch(() => {
+  $("#authMode").textContent = "Local Mode";
+  $("#authMessage").textContent = "Firebase Auth is unavailable. StudyFlow is still working in Local Mode.";
+});
 
 function credentials() {
   return {

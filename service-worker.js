@@ -1,4 +1,4 @@
-const CACHE_NAME = "studyflow-v4";
+const CACHE_NAME = "studyflow-v5";
 
 const FILES_TO_CACHE = [
   "./",
@@ -16,6 +16,7 @@ const FILES_TO_CACHE = [
   "./assets/js/core/shell.js",
   "./assets/js/core/ui.js",
   "./assets/js/cloud/firebaseConfig.js",
+  "./assets/js/cloud/firebaseCore.js",
   "./assets/js/cloud/auth.js",
   "./assets/js/cloud/cloudStorage.js",
   "./assets/js/pages/dashboard.js",

@@ -1,12 +1,14 @@
-import { initShell } from "../core/shell.js";
+import { initShell, onCloudStateLoaded } from "../core/shell.js";
 import { $ } from "../core/utils.js";
 import { store } from "../core/storage.js";
 import { toast } from "../core/ui.js";
 
 const state = initShell();
 
-$("#studentName").value = state.name;
-$("#compactMode").checked = Boolean(state.settings.compactMode);
+function renderSettings() {
+  $("#studentName").value = state.name;
+  $("#compactMode").checked = Boolean(state.settings.compactMode);
+}
 
 $("#saveSettings").addEventListener("click", () => {
   const name = $("#studentName").value.trim() || "Student";
@@ -23,3 +25,6 @@ $("#clearData").addEventListener("click", () => {
   toast("Local StudyFlow data cleared.");
   setTimeout(() => window.location.assign("../index.html"), 700);
 });
+
+renderSettings();
+onCloudStateLoaded(state, renderSettings);

@@ -1,4 +1,4 @@
-import { initShell } from "../core/shell.js";
+import { initShell, onCloudStateLoaded } from "../core/shell.js";
 import { $, $$, classNameFor, classOptions, today, uid } from "../core/utils.js";
 import { store } from "../core/storage.js";
 import { assignmentCard, emptyState, modal, toast } from "../core/ui.js";
@@ -96,3 +96,4 @@ document.addEventListener("click", (event) => {
 });
 
 render();
+onCloudStateLoaded(state, render);

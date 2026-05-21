@@ -29,13 +29,34 @@ function icon(name) {
   return `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name]}</svg>`;
 }
 
+function applyShellState(state = loadState()) {
+  document.body.classList.toggle("compact", Boolean(state.settings.compactMode));
+  const pendingPill = $("#sidebarPending");
+  if (pendingPill) {
+    pendingPill.textContent = `${state.assignments.filter((item) => !item.done).length} pending`;
+  }
+}
+
+export function syncPageState(state) {
+  Object.assign(state, loadState());
+  applyShellState(state);
+  return state;
+}
+
+export function onCloudStateLoaded(state, callback) {
+  window.addEventListener("studyflow:cloud-loaded", () => {
+    syncPageState(state);
+    callback?.(state);
+  });
+}
+
 export function initShell() {
   const activePage = document.body.dataset.page || "dashboard";
   const state = loadState();
   const root = window.location.pathname.includes("/pages/") ? "../" : "";
   const initialSyncStatus = getCloudSyncStatus();
   const [initialSyncTitle, initialSyncDetail = ""] = initialSyncStatus.split(". ");
-  document.body.classList.toggle("compact", Boolean(state.settings.compactMode));
+  applyShellState(state);
 
   $("#appShell").innerHTML = `
     <div class="app-shell">
@@ -53,7 +74,7 @@ export function initShell() {
           `).join("")}
         </nav>
         <div class="sidebar-footer">
-          <span class="pill">${state.assignments.filter((item) => !item.done).length} pending</span>
+          <span class="pill" id="sidebarPending">${state.assignments.filter((item) => !item.done).length} pending</span>
         </div>
       </aside>
       <div>
@@ -78,16 +99,8 @@ export function initShell() {
     $("#syncStatusTitle").textContent = status;
     $("#syncStatusDetail").textContent = detail;
   });
-  window.addEventListener("studyflow:cloud-loaded", () => {
-    try {
-      const lastReload = Number(sessionStorage.getItem("sf_cloud_reload_at") || 0);
-      if (Date.now() - lastReload < 5000) return;
-      sessionStorage.setItem("sf_cloud_reload_at", String(Date.now()));
-      window.location.reload();
-    } catch (error) {
-      $("#syncStatusDetail").textContent = "Cloud data loaded. Refresh to view the latest data.";
-    }
-  });
+  window.addEventListener("studyflow:local-change", () => applyShellState(loadState()));
+  window.addEventListener("studyflow:cloud-loaded", () => applyShellState(loadState()));
   initCloudSync();
   return state;
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = "studyflow-v3";
+const CACHE_NAME = "studyflow-v4";
 
 const FILES_TO_CACHE = [
   "./",
@@ -15,6 +15,9 @@ const FILES_TO_CACHE = [
   "./assets/js/core/utils.js",
   "./assets/js/core/shell.js",
   "./assets/js/core/ui.js",
+  "./assets/js/cloud/firebaseConfig.js",
+  "./assets/js/cloud/auth.js",
+  "./assets/js/cloud/cloudStorage.js",
   "./assets/js/pages/dashboard.js",
   "./assets/js/pages/classes.js",
   "./assets/js/pages/assignments.js",
@@ -23,13 +26,15 @@ const FILES_TO_CACHE = [
   "./assets/js/pages/notes.js",
   "./assets/js/pages/stats.js",
   "./assets/js/pages/settings.js",
+  "./assets/js/pages/login.js",
   "./pages/assignments.html",
   "./pages/classes.html",
   "./pages/exams.html",
   "./pages/timer.html",
   "./pages/notes.html",
   "./pages/stats.html",
-  "./pages/settings.html"
+  "./pages/settings.html",
+  "./pages/login.html"
 ];
 
 self.addEventListener("install", (event) => {

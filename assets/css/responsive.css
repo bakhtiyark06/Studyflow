@@ -15,6 +15,7 @@
   .timer-layout,
   .notes-layout,
   .classes-layout,
+  .auth-layout,
   .settings-grid { grid-template-columns: 1fr; }
   .span-2 { grid-column: auto; }
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -37,4 +38,5 @@
   .segmented { width: 100%; }
   .segmented button { flex: 1; }
   .toast-region { left: 14px; right: 14px; }
+  .sync-banner { align-items: flex-start; flex-direction: column; }
 }

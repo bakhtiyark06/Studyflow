@@ -1,6 +1,7 @@
 import { initShell, onCloudStateLoaded } from "../core/shell.js";
 import { $, daysUntil, durationLabel, esc, formatDate, studyStreak, timeOfDay, totalStudyMinutes } from "../core/utils.js";
 import { assignmentCard, examCard, statCard, studyCard } from "../core/ui.js";
+import { getAuthMode, watchAuthState } from "../cloud/auth.js";
 import {
   activeExams,
   buildAlertItems,
@@ -16,6 +17,37 @@ import {
 } from "../core/success.js";
 
 const state = initShell();
+let authIdentity = { mode: getAuthMode() === "firebase-ready" ? "pending" : "local-mode", user: null };
+
+function titleCaseWord(value = "") {
+  if (!value) return "";
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function nameFromEmail(email = "") {
+  const localPart = email.split("@")[0] || "";
+  return localPart
+    .split(/[._-]+/)
+    .filter(Boolean)
+    .map(titleCaseWord)
+    .join(" ") || "Student";
+}
+
+function authDisplayName(user) {
+  const displayName = user?.displayName?.trim();
+  if (displayName) return displayName;
+  return nameFromEmail(user?.email || "");
+}
+
+function dashboardDisplayName() {
+  if (authIdentity.mode === "firebase") {
+    return authIdentity.user ? authDisplayName(authIdentity.user) : "Student";
+  }
+  if (authIdentity.mode === "local-mode") {
+    return state.name || "Student";
+  }
+  return "Student";
+}
 
 function dashboardEmptyState(message, href, label) {
   return `
@@ -118,7 +150,7 @@ function render() {
   renderOnboarding(metrics);
 
   $("#timeOfDay").textContent = timeOfDay();
-  $("#userName").textContent = state.name;
+  $("#userName").textContent = dashboardDisplayName();
   $("#dashboardSubtitle").textContent = metrics.overdue.length
     ? `${metrics.overdue.length} overdue assignment${metrics.overdue.length === 1 ? "" : "s"} need attention first.`
     : "Your student workload, study rhythm, and next move are organized in one place.";
@@ -218,6 +250,13 @@ function render() {
 
 render();
 onCloudStateLoaded(state, render);
+watchAuthState((status) => {
+  authIdentity = { mode: status.mode, user: status.user || null };
+  render();
+}).catch(() => {
+  authIdentity = { mode: "local-mode", user: null };
+  render();
+});
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js").catch((error) => console.warn("SW registration failed", error));

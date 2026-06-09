@@ -10,6 +10,7 @@ export const SYNC_KEYS = [
   KEYS.study,
   KEYS.notes,
   KEYS.settings,
+  KEYS.reminders,
   KEYS.name,
 ];
 
@@ -20,6 +21,7 @@ const DOC_BY_KEY = {
   [KEYS.study]: "studySessions",
   [KEYS.notes]: "notes",
   [KEYS.settings]: "settings",
+  [KEYS.reminders]: "reminders",
   [KEYS.name]: "profile",
 };
 
@@ -80,6 +82,7 @@ export function buildLocalSyncPayload() {
     [KEYS.study]: state.study,
     [KEYS.notes]: state.notes,
     [KEYS.settings]: state.settings,
+    [KEYS.reminders]: state.reminders,
     [KEYS.name]: state.name,
     updatedAtClient: new Date().toISOString(),
   };

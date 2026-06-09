@@ -16,8 +16,9 @@
     <section class="page-hero">
       <div>
         <p class="eyebrow">Today</p>
-        <h1>Good <span id="timeOfDay">morning</span>, <em id="userName">Student</em>.</h1>
+        <h1>Good <span id="timeOfDay">morning</span>, <em id="userName">Student</em>. Let's keep you on track.</h1>
         <p id="dashboardSubtitle">A focused command center for classes, deadlines, exams, and study time.</p>
+        <div class="hero-signals" id="heroSignals" aria-label="Weekly academic signals"></div>
       </div>
       <div class="hero-meter">
         <span id="focusScore">0%</span>
@@ -27,10 +28,64 @@
 
     <section class="stats-grid" id="statsGrid" aria-label="StudyFlow stats"></section>
 
+    <section class="panel onboarding-panel" id="onboardingPanel" hidden>
+      <div class="panel-header">
+        <h2>Let's set up your semester.</h2>
+        <a class="text-link" href="pages/classes.html">Start setup</a>
+      </div>
+      <div class="onboarding-steps" id="onboardingSteps"></div>
+    </section>
+
+    <section class="dashboard-grid survival-grid" aria-label="Academic survival overview">
+      <article class="panel today-focus-panel">
+        <div class="panel-header">
+          <h2>Today's Focus</h2>
+          <a class="text-link" href="pages/notifications.html">Alerts</a>
+        </div>
+        <p class="dashboard-callout" id="todaysFocusText">Your focus plan will appear here.</p>
+        <div id="dailyChecklist" class="checklist-list"></div>
+      </article>
+
+      <article class="panel workload-panel">
+        <div class="panel-header">
+          <h2>How Cooked Am I?</h2>
+          <span class="pill" id="cookedStatus">Not Cooked</span>
+        </div>
+        <p class="dashboard-callout" id="cookedExplanation">Your workload status will appear here.</p>
+        <div class="workload-meter" aria-hidden="true">
+          <div class="workload-fill" id="workloadFill"></div>
+        </div>
+      </article>
+
+      <article class="panel next-action-panel">
+        <div class="panel-header">
+          <h2>What should I do next?</h2>
+          <span class="pill">Next move</span>
+        </div>
+        <p class="dashboard-callout" id="nextActionText">Your next recommendation will appear here.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Weekly Goals</h2>
+          <a class="text-link" href="pages/settings.html">Settings</a>
+        </div>
+        <div id="weeklyGoals" class="mini-chart"></div>
+      </article>
+    </section>
+
+    <section class="panel weekly-glance-panel">
+      <div class="panel-header">
+        <h2>This Week at a Glance</h2>
+        <a class="text-link" href="pages/stats.html">View stats</a>
+      </div>
+      <div class="weekly-glance" id="weeklyGlance"></div>
+    </section>
+
     <section class="dashboard-grid">
       <article class="panel span-2">
         <div class="panel-header">
-          <h2>Priority Assignments</h2>
+          <h2>Due Soon</h2>
           <a class="text-link" href="pages/assignments.html">View all</a>
         </div>
         <div id="dueSoonList" class="stack-list"></div>
@@ -38,15 +93,31 @@
 
       <article class="panel">
         <div class="panel-header">
-          <h2>Upcoming Exams</h2>
-          <a class="text-link" href="pages/exams.html">Plan</a>
+          <h2>Overdue Work</h2>
+          <a class="text-link" href="pages/assignments.html">Recover</a>
         </div>
-        <div id="upcomingExams" class="stack-list"></div>
+        <div id="overdueWork" class="stack-list"></div>
       </article>
 
       <article class="panel">
         <div class="panel-header">
-          <h2>Classes</h2>
+          <h2>Exams This Week</h2>
+          <a class="text-link" href="pages/exams.html">Plan</a>
+        </div>
+        <div id="examsThisWeekList" class="stack-list"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Upcoming Study Sessions</h2>
+          <a class="text-link" href="pages/timer.html">Timer</a>
+        </div>
+        <div id="studyPlanList" class="stack-list"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Class Workload Overview</h2>
           <a class="text-link" href="pages/classes.html">Manage</a>
         </div>
         <div id="classOverview" class="stack-list"></div>
@@ -66,6 +137,17 @@
           <a class="text-link" href="pages/timer.html">Timer</a>
         </div>
         <div id="recentStudy" class="stack-list"></div>
+      </article>
+
+      <article class="panel span-2">
+        <div class="panel-header">
+          <h2>Completed Archive</h2>
+          <div class="button-row">
+            <a class="text-link" href="pages/assignments.html">Assignments</a>
+            <a class="text-link" href="pages/exams.html">Exams</a>
+          </div>
+        </div>
+        <div id="completedArchive" class="archive-grid"></div>
       </article>
     </section>
   </template>

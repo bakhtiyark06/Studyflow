@@ -27,6 +27,57 @@
           <span>Use compact lists</span>
         </label>
       </article>
+      <article class="panel form-panel">
+        <div class="panel-header">
+          <h2>Reminder Settings</h2>
+          <a class="text-link" href="notifications.html">Notification center</a>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="notificationsEnabled">
+          <span>Enable browser notifications</span>
+        </label>
+        <label class="label" for="defaultAssignmentReminder">Default assignment reminder</label>
+        <select class="input" id="defaultAssignmentReminder">
+          <option value="day-of">Day of deadline</option>
+          <option value="1d">1 day before</option>
+          <option value="2d">2 days before</option>
+          <option value="1w">1 week before</option>
+          <option value="none">No reminder</option>
+        </select>
+        <label class="label" for="defaultAssignmentReminderTime">Default assignment reminder time</label>
+        <input class="input" id="defaultAssignmentReminderTime" type="time">
+        <label class="label" for="defaultExamReminder">Default exam reminder</label>
+        <select class="input" id="defaultExamReminder">
+          <option value="day-of">Day of exam</option>
+          <option value="1d">1 day before</option>
+          <option value="2d">2 days before</option>
+          <option value="1w">1 week before</option>
+          <option value="none">No reminder</option>
+        </select>
+        <label class="label" for="defaultExamReminderTime">Default exam reminder time</label>
+        <input class="input" id="defaultExamReminderTime" type="time">
+        <label class="checkbox-row">
+          <input type="checkbox" id="dailyFocusReminder">
+          <span>Daily focus reminder</span>
+        </label>
+        <label class="label" for="dailyFocusTime">Daily focus time</label>
+        <input class="input" id="dailyFocusTime" type="time">
+        <label class="checkbox-row">
+          <input type="checkbox" id="quietHoursEnabled">
+          <span>Use quiet hours</span>
+        </label>
+        <div class="form-grid two-col">
+          <div>
+            <label class="label" for="quietStart">Quiet start</label>
+            <input class="input" id="quietStart" type="time">
+          </div>
+          <div>
+            <label class="label" for="quietEnd">Quiet end</label>
+            <input class="input" id="quietEnd" type="time">
+          </div>
+        </div>
+        <p class="muted-note">If browser notifications are denied, StudyFlow still shows in-app alerts.</p>
+      </article>
       <article class="panel danger-zone">
         <h2>Data</h2>
         <p>Clear local app data from this browser. This does not affect GitHub files.</p>

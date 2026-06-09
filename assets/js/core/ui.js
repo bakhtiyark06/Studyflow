@@ -23,6 +23,7 @@ export function assignmentCard(item, { compact = false, state = null } = {}) {
   const dueText = due < 0 ? `${Math.abs(due)}d overdue` : due === 0 ? "Due today" : `Due in ${due}d`;
   const linkedClass = state?.classes?.find((classItem) => classItem.id === item.classId);
   const classLabel = linkedClass?.name || item.course || "";
+  const reminderText = item.reminderPreset && item.reminderPreset !== "none" ? "Reminder set" : "";
   return `
     <article class="card ${item.done ? "is-done" : ""}" data-id="${esc(item.id)}">
       <div>
@@ -31,33 +32,40 @@ export function assignmentCard(item, { compact = false, state = null } = {}) {
           ${classLabel ? `<span>${esc(classLabel)}</span>` : ""}
           <span class="priority-${esc(item.priority || "medium")}">${esc(item.priority || "medium")}</span>
           <span>${esc(dueText)}</span>
+          ${reminderText ? `<span>${esc(reminderText)}</span>` : ""}
         </div>
       </div>
       ${compact ? "" : `<div class="card-actions">
-        <button class="icon-btn" data-toggle="${esc(item.id)}" aria-label="Toggle complete">${item.done ? "Undo" : "Done"}</button>
+        <button class="icon-btn" data-edit="${esc(item.id)}" aria-label="Edit assignment">Edit</button>
+        <button class="icon-btn" data-toggle="${esc(item.id)}" aria-label="Toggle complete">${item.done ? "Restore" : "Done"}</button>
         <button class="icon-btn" data-delete="${esc(item.id)}" aria-label="Delete assignment">Del</button>
       </div>`}
     </article>`;
 }
 
-export function examCard(item, { state = null } = {}) {
+export function examCard(item, { compact = false, state = null } = {}) {
   const days = Math.max(0, daysUntil(item.date));
   const linkedClass = state?.classes?.find((classItem) => classItem.id === item.classId);
   const classLabel = linkedClass?.name || item.course || "";
+  const difficulty = item.difficulty || item.priority || "medium";
   return `
-    <article class="card" data-id="${esc(item.id)}">
+    <article class="card ${item.done ? "is-done" : ""}" data-id="${esc(item.id)}">
       <div>
         <h3 class="card-title">${esc(item.title)}</h3>
         <div class="card-meta">
           ${classLabel ? `<span>${esc(classLabel)}</span>` : ""}
+          <span class="priority-${esc(difficulty === "hard" ? "high" : difficulty === "easy" ? "low" : "medium")}">${esc(difficulty)}</span>
           <span>${formatDateTime(item.date)}</span>
           ${item.location ? `<span>${esc(item.location)}</span>` : ""}
+          ${item.reminderPreset && item.reminderPreset !== "none" ? "<span>Reminder set</span>" : ""}
         </div>
       </div>
-      <div class="card-actions">
+      ${compact ? "" : `<div class="card-actions">
         <span class="tag">${days}d</span>
+        <button class="icon-btn" data-edit="${esc(item.id)}" aria-label="Edit exam">Edit</button>
+        <button class="icon-btn" data-toggle="${esc(item.id)}" aria-label="Toggle exam complete">${item.done ? "Restore" : "Done"}</button>
         <button class="icon-btn" data-delete="${esc(item.id)}" aria-label="Delete exam">Del</button>
-      </div>
+      </div>`}
     </article>`;
 }
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = "studyflow-v7";
+const CACHE_NAME = "studyflow-v9";
 
 const FILES_TO_CACHE = [
   "./",
@@ -14,6 +14,7 @@ const FILES_TO_CACHE = [
   "./assets/js/core/storage.js",
   "./assets/js/core/utils.js",
   "./assets/js/core/shell.js",
+  "./assets/js/core/success.js",
   "./assets/js/core/ui.js",
   "./assets/js/cloud/firebaseConfig.js",
   "./assets/js/cloud/firebaseCore.js",
@@ -25,6 +26,7 @@ const FILES_TO_CACHE = [
   "./assets/js/pages/exams.js",
   "./assets/js/pages/timer.js",
   "./assets/js/pages/notes.js",
+  "./assets/js/pages/notifications.js",
   "./assets/js/pages/stats.js",
   "./assets/js/pages/settings.js",
   "./assets/js/pages/login.js",
@@ -33,6 +35,7 @@ const FILES_TO_CACHE = [
   "./pages/exams.html",
   "./pages/timer.html",
   "./pages/notes.html",
+  "./pages/notifications.html",
   "./pages/stats.html",
   "./pages/settings.html",
   "./pages/login.html"

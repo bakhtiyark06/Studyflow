@@ -8,6 +8,19 @@
 
 .panel { padding: 20px; }
 
+.panel,
+.card,
+.btn,
+.icon-btn,
+.text-link {
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease, background .18s ease, color .18s ease;
+}
+
+.dashboard-grid .panel:hover {
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 22px 58px rgba(0,0,0,.32);
+}
+
 .panel-header {
   display: flex;
   align-items: center;
@@ -24,6 +37,20 @@
   gap: 12px;
   padding: 16px;
   animation: rise .22s ease both;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.16);
+}
+
+.card.is-done {
+  opacity: .72;
+}
+
+.card.is-done .card-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
 }
 
 .card-title { margin: 0 0 6px; font-weight: 800; }
@@ -65,6 +92,14 @@
 
 .btn.primary { background: var(--accent); color: #10131c; border-color: transparent; }
 .btn.danger { background: rgba(255,107,107,.13); color: var(--danger); }
+
+.btn:hover,
+.icon-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.18);
+}
+
+.btn.primary:hover { box-shadow: 0 10px 24px rgba(255,200,87,.18); }
 
 .icon-btn {
   display: inline-grid;
@@ -170,6 +205,52 @@
 }
 
 .sync-banner strong { color: var(--accent); }
+
+.alert-strip {
+  width: min(1180px, 100%);
+  margin: 0 auto 18px;
+}
+
+.alert-strip-list {
+  display: grid;
+  gap: 10px;
+}
+
+.mini-alert {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(18,23,35,.82);
+  box-shadow: var(--shadow);
+}
+
+.mini-alert strong,
+.mini-alert span {
+  display: block;
+}
+
+.mini-alert span {
+  color: var(--muted);
+}
+
+.mini-alert.warning { border-color: rgba(255,200,87,.28); }
+.mini-alert.danger { border-color: rgba(255,107,107,.32); }
+.mini-alert.info { border-color: rgba(110,168,254,.28); }
+
+.mini-alert-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alert-center-link {
+  display: inline-flex;
+  margin-top: 10px;
+}
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(8px); }

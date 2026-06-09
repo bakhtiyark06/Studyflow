@@ -6,6 +6,7 @@ const KEYS = {
   notes: "sf_notes",
   classes: "sf_classes",
   settings: "sf_settings",
+  reminders: "sf_reminders",
 };
 
 const defaults = {
@@ -15,7 +16,20 @@ const defaults = {
   name: "Student",
   notes: [],
   classes: [],
-  settings: { compactMode: false },
+  settings: {
+    compactMode: false,
+    notificationsEnabled: false,
+    defaultAssignmentReminder: "1d",
+    defaultAssignmentReminderTime: "09:00",
+    defaultExamReminder: "2d",
+    defaultExamReminderTime: "09:00",
+    dailyFocusReminder: true,
+    dailyFocusTime: "18:00",
+    quietHoursEnabled: false,
+    quietStart: "22:00",
+    quietEnd: "07:00",
+  },
+  reminders: { dismissed: [], completed: [], browserSent: [] },
 };
 
 let suppressStorageEvents = false;
@@ -64,6 +78,7 @@ export function loadState() {
     notes: readJson(KEYS.notes, defaults.notes),
     classes: readJson(KEYS.classes, defaults.classes),
     settings: { ...defaults.settings, ...readJson(KEYS.settings, defaults.settings) },
+    reminders: { ...defaults.reminders, ...readJson(KEYS.reminders, defaults.reminders) },
   };
 }
 
@@ -73,6 +88,7 @@ export const store = {
   setStudy(value) { return writeJson(KEYS.study, value); },
   setNotes(value) { return writeJson(KEYS.notes, value); },
   setClasses(value) { return writeJson(KEYS.classes, value); },
+  setReminders(value) { return writeJson(KEYS.reminders, { ...defaults.reminders, ...value }); },
   setName(value) {
     try {
       localStorage.setItem(KEYS.name, value || defaults.name);
@@ -105,6 +121,7 @@ export function replaceLocalStateFromSync(payload = {}) {
     if (KEYS.notes in payload) localStorage.setItem(KEYS.notes, JSON.stringify(payload[KEYS.notes] || []));
     if (KEYS.classes in payload) localStorage.setItem(KEYS.classes, JSON.stringify(payload[KEYS.classes] || []));
     if (KEYS.settings in payload) localStorage.setItem(KEYS.settings, JSON.stringify({ ...defaults.settings, ...(payload[KEYS.settings] || {}) }));
+    if (KEYS.reminders in payload) localStorage.setItem(KEYS.reminders, JSON.stringify({ ...defaults.reminders, ...(payload[KEYS.reminders] || {}) }));
     if (KEYS.name in payload) localStorage.setItem(KEYS.name, payload[KEYS.name] || defaults.name);
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("studyflow:cloud-loaded", { detail: { keys: Object.keys(payload) } }));

@@ -14,11 +14,15 @@
   .dashboard-grid,
   .timer-layout,
   .notes-layout,
+  .notification-center-grid,
   .classes-layout,
   .auth-layout,
   .settings-grid { grid-template-columns: 1fr; }
   .span-2 { grid-column: auto; }
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .weekly-glance { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .onboarding-steps,
+  .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 620px) {
@@ -32,9 +36,30 @@
     width: 112px;
     height: 112px;
   }
+  .hero-signals,
+  .hero-signals span {
+    width: 100%;
+  }
+  .hero-signals span {
+    justify-content: space-between;
+  }
+  .dashboard-callout {
+    min-height: auto;
+    font-size: 1rem;
+  }
+  .weekly-glance { grid-template-columns: 1fr; }
+  .onboarding-steps,
+  .archive-grid,
+  .form-grid.two-col { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: 1fr; }
   .card { grid-template-columns: 1fr; }
   .card-actions { justify-content: flex-start; }
+  .mini-alert {
+    grid-template-columns: 1fr;
+  }
+  .mini-alert-actions {
+    justify-content: flex-start;
+  }
   .segmented { width: 100%; }
   .segmented button { flex: 1; }
   .toast-region { left: 14px; right: 14px; }
